@@ -11,13 +11,13 @@ class Board:
     def load(self):
         object_to_get = None
         if self.get_solved_or_unsolved == 1:
-
             object_to_get = "board"
         else:
             object_to_get = "solution"
 
         with open(self.file_name) as f:
             records = json.load(f)
+
         for record in records:
             if record["id"] == self.object_id:
                 Loaded_board = record[object_to_get]
@@ -39,10 +39,45 @@ class Board:
 
             board_matrix[i] = [int(c) for c in row_chars]
 
-        print(board_matrix)
+        return board_matrix
 
 
+class Validate_board:
+    def row_check():
+        pass
+
+    def colum_check():
+        pass
+
+    def box_check():
+        pass
+
+
+
+def add_board(board_string,solution_string,overwrite_or_not, id, file_name): # overwrite=true then id cant be id=None
+        if (board_string != None and solution_string != None) and board_string != 81 or solution_string != 81:
+            print("Invalid length of board_string or solution_string")
+            return
         
-b1 = Board("easy-1",r"data/easy.json",get_solved_or_unsolved=0)
+        if overwrite_or_not == True:
+            object = {
+                "id": 1,
+                "board": board_string,
+                "solution": solution_string
+            }
+
+            with open(file_name) as file:
+                records = json.load(file)
+
+            for record in range(records):
+                if record["id"] == id:
+                    try:
+                        record = object
+                        
+                    except: None
+        
+
+
+b1 = Board("1",r"data/easy.json",get_solved_or_unsolved=0)
 board = b1.load()
-b1.convert_to_matrix()
+board_matrix = b1.convert_to_matrix()
