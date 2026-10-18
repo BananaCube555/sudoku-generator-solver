@@ -6,7 +6,7 @@ class Board:
         self.object_id = object_id
         self.file_name = file__name
         self.board_flattened = get_solved_or_unsolved
-        self.get_solved_or_unsolved = None # 1 for puzzle 0 for the solved puzzle
+        self.get_solved_or_unsolved = get_solved_or_unsolved # 1 for puzzle 0 for the solved puzzle
 
     def load(self):
         object_to_get = None
@@ -43,20 +43,24 @@ class Board:
 
 
 class Validate_board:
-    def row_check():
+    def length_check(self):
         pass
 
-    def colum_check():
+    def row_check(self):
         pass
 
-    def box_check():
+    def colum_check(self):
+        pass
+
+    def box_check(self):
         pass
 
 
 
-def add_board(board_string,solution_string,overwrite_or_not, id, file_name): # overwrite=true then id cant be id=None
-        if (board_string != None and solution_string != None) and board_string != 81 or solution_string != 81:
-            print("Invalid length of board_string or solution_string")
+def add_board(board_string, solution_string, id, file_name, overwrite_or_not=True):
+        if (board_string == None and solution_string == None):
+            print("board_string or solution_string be equal to None")
+
             return
         
         if overwrite_or_not == True:
@@ -69,14 +73,16 @@ def add_board(board_string,solution_string,overwrite_or_not, id, file_name): # o
             with open(file_name) as file:
                 records = json.load(file)
 
-            for record in range(records):
+            for record in records:
                 if record["id"] == id:
-                    try:
-                        record = object
+                    record = object
                         
-                    except: None
-        
+                    
 
+
+add_board("530070000600195000080000670800060003400803001700020006060000280000419005000080079",
+          "524678912672195348198342567859761423426853791713924856961537284287419635345286179",
+          2,r"data\easy.json")
 
 b1 = Board("1",r"data/easy.json",get_solved_or_unsolved=0)
 board = b1.load()
