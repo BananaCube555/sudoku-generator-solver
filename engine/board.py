@@ -5,7 +5,7 @@ class Board:
     def __init__(self,object_id,file__name,get_solved_or_unsolved):
         self.object_id = object_id
         self.file_name = file__name
-        self.board_flattened = get_solved_or_unsolved
+        self.board_flattened = None
         self.get_solved_or_unsolved = get_solved_or_unsolved # 1 for puzzle 0 for the solved puzzle
 
     def load(self):
@@ -36,15 +36,27 @@ class Board:
             numbers = []
             for integer in row_chars:
                 numbers.append(int(integer))
-
-            board_matrix[i] = [int(c) for c in row_chars]
+            
+            board_matrix[i] = numbers
+            
 
         return board_matrix
 
 
 class Validate_board:
+    def __init__(self,board_matrix):
+        self.board_matrix = board_matrix
+
     def length_check(self):
-        pass
+        valid_length = False
+        len_rows = len(self.board_matrix)
+        len_cols = len(self.board_matrix[0])
+        board_len = len_rows * len_cols
+
+        if board_len != 81:
+            valid_length = True
+
+        return valid_length
 
     def row_check(self):
         pass
@@ -60,8 +72,8 @@ class Validate_board:
 def add_board(board_string, solution_string, id, file_name, overwrite_or_not=True):
         if (board_string == None and solution_string == None):
             print("board_string or solution_string be equal to None")
-
             return
+        
         
         if overwrite_or_not == True:
             object = {
@@ -86,4 +98,9 @@ add_board("530070000600195000080000670800060003400803001700020006060000280000419
 
 b1 = Board("1",r"data/easy.json",get_solved_or_unsolved=0)
 board = b1.load()
-board_matrix = b1.convert_to_matrix()
+BM1 = b1.convert_to_matrix()
+
+vb_BM1 = Validate_board(BM1)
+a = vb_BM1.length_check()
+
+print(a)
