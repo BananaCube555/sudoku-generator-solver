@@ -49,17 +49,28 @@ class Validate_board:
 
     def length_check(self):
         valid_length = False
-        len_rows = len(self.board_matrix)
+        len_rows = len(self.board_matrix[1])
         len_cols = len(self.board_matrix[0])
         board_len = len_rows * len_cols
 
-        if board_len != 81:
+        if board_len == 81:
             valid_length = True
 
         return valid_length
 
+
     def row_check(self):
-        pass
+            
+        valid_rows = True
+        for row in range(9):
+            curr_row = []
+            for col in range(9):
+                curr_row.append(self.board_matrix[row,col])
+
+            if len(curr_row) != len(set(curr_row)):
+                valid_rows = False
+
+        return valid_rows
 
     def colum_check(self):
         pass
@@ -96,11 +107,15 @@ add_board("530070000600195000080000670800060003400803001700020006060000280000419
           "524678912672195348198342567859761423426853791713924856961537284287419635345286179",
           2,r"data\easy.json")
 
-b1 = Board("1",r"data/easy.json",get_solved_or_unsolved=0)
+b1 = Board("0",r"data/easy.json",get_solved_or_unsolved=0)
 board = b1.load()
 BM1 = b1.convert_to_matrix()
 
 vb_BM1 = Validate_board(BM1)
-a = vb_BM1.length_check()
+valid_length = vb_BM1.length_check()
+valid_rows = vb_BM1.row_check()
 
-print(a)
+print(valid_length)
+print(valid_rows)
+
+#TODO Fix board input for puzzle error in line 34   when b1 = Board("0",r"data/easy.json",get_solved_or_unsolved=0)
