@@ -1,6 +1,7 @@
 import numpy as np
 import json
 
+
 class Board:
     def __init__(self,object_id,file__name,get_solved_or_unsolved):
         self.object_id = object_id
@@ -43,6 +44,7 @@ class Board:
         return board_matrix
 
 
+
 class Validate_board:
     def __init__(self,board_matrix):
         self.board_matrix = board_matrix
@@ -79,8 +81,10 @@ class Validate_board:
         pass
 
 
+#TODO Make a func that finds the most best id for a new object
 
-def add_board(board_string, solution_string, id, file_name, overwrite_or_not=True):
+
+def add_board(board_string, solution_string, id, file_name, overwrite_or_not=False):
         if (board_string == None and solution_string == None):
             print("board_string or solution_string be equal to None")
             return
@@ -88,7 +92,7 @@ def add_board(board_string, solution_string, id, file_name, overwrite_or_not=Tru
         
         if overwrite_or_not == True:
             object = {
-                "id": 1,
+                "id": id,
                 "board": board_string,
                 "solution": solution_string
             }
@@ -96,26 +100,53 @@ def add_board(board_string, solution_string, id, file_name, overwrite_or_not=Tru
             with open(file_name) as file:
                 records = json.load(file)
 
-            for record in records:
-                if record["id"] == id:
-                    record = object
-                        
-                    
+            for i, record in enumerate(records): #we use enumerate bc we need to index 
+                if record["id"] == id:  
+                    records[i] = object
+
+            with open(file_name, "w") as file:
+                json.dump(records, file, indent=4)
+
+        else:
+            # with open(file_name) as file:
+            #     records = json.load(file)
+
+            # id_counter = 0
+
+            # for record in records:
+            #     if "id" in record:
+            #         id_counter += 1
+
+            # id_counter += 1 #so the id is new 
+            with open(file_name) as file:
+                    records = json.load(file)
+
+            object = {
+                        "id": id,
+                        "board": board_string,
+                        "solution": solution_string
+                    }
+            
+            records.append(object)
+
+            with open(file_name, "w") as file:
+                json.dump(records,file, indent=4)
+            
+        
 
 
-add_board("530070000600195000080000670800060003400803001700020006060000280000419005000080079",
-          "524678912672195348198342567859761423426853791713924856961537284287419635345286179",
-          2,r"data\easy.json")
 
-b1 = Board("0",r"data/easy.json",get_solved_or_unsolved=0)
+# create a board so we can test other funcs
+b1 = Board("1",r"data/easy.json",get_solved_or_unsolved=0)
 board = b1.load()
 BM1 = b1.convert_to_matrix()
 
+# test validation class
 vb_BM1 = Validate_board(BM1)
 valid_length = vb_BM1.length_check()
 valid_rows = vb_BM1.row_check()
 
-print(valid_length)
-print(valid_rows)
 
-#TODO Fix board input for puzzle error in line 34   when b1 = Board("0",r"data/easy.json",get_solved_or_unsolved=0)
+add_board("000260701680070090190004500820100040004602900050003028009300074040050036703018000",
+          "435269781682571493197834562826195347374682915951743628519326874248957136763418259",
+          3,r"data\easy.json")
