@@ -71,11 +71,23 @@ class Validate_board:
 
             if len(curr_row) != len(set(curr_row)):
                 valid_rows = False
+                
 
         return valid_rows
 
     def colum_check(self):
-        pass
+        valid_colums = True
+
+        for col in range(9):
+            curr_col = []
+            for row in range(9):
+                curr_col.append(self.board_matrix[col,row])
+
+        if len(curr_col) != len(set(curr_col)):
+            valid_colums = False
+
+        return valid_colums
+
 
     def box_check(self):
         pass
@@ -137,7 +149,7 @@ def add_board(board_string, solution_string, id, file_name, overwrite_or_not=Fal
 
 
 # create a board so we can test other funcs
-b1 = Board("1",r"data/easy.json",get_solved_or_unsolved=0)
+b1 = Board("2",r"data/easy.json",get_solved_or_unsolved=0)
 board = b1.load()
 BM1 = b1.convert_to_matrix()
 
@@ -145,8 +157,8 @@ BM1 = b1.convert_to_matrix()
 vb_BM1 = Validate_board(BM1)
 valid_length = vb_BM1.length_check()
 valid_rows = vb_BM1.row_check()
+valid_cols = vb_BM1.colum_check()
 
 
-add_board("000260701680070090190004500820100040004602900050003028009300074040050036703018000",
-          "435269781682571493197834562826195347374682915951743628519326874248957136763418259",
-          3,r"data\easy.json")
+print(valid_rows)
+print(valid_cols)
