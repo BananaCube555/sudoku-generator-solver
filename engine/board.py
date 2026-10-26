@@ -69,7 +69,13 @@ class Validate_board:
             for col in range(9):
                 curr_row.append(self.board_matrix[row,col])
 
-            if len(curr_row) != len(set(curr_row)):
+            for num in curr_row:
+                curr_row_without_zeros = []
+                if num != 0:
+                    curr_row_without_zeros.append(num)
+            
+
+            if len(curr_row_without_zeros) != len(set(curr_row_without_zeros)):
                 valid_rows = False
                 
 
