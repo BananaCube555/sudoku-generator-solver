@@ -18,4 +18,4 @@ class generate_board:
                 
 
     def generate_unsolved(self):
-        pass
+        pass 
